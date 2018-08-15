@@ -296,6 +296,7 @@ class LeoQtTree(leoFrame.LeoTree):
             c.frame.tree.select(p)
             c.setCurrentPosition(p)
         else:
+            c.frame.tree.select(p) ### Make *sure* we switch nodes properly.
             c.setCurrentPosition(p)
         assert not self.busy, g.callers()
         self.redrawCount += 1
@@ -840,7 +841,9 @@ class LeoQtTree(leoFrame.LeoTree):
         # Do **not** set lockouts here.
         # Only methods that actually generate events should set lockouts.
         p.contract()
-        self.select(p)
+        self.full_redraw(p)
+            # Now ensures the node is selected properly.
+        ### self.select(p)
         ###
             # if p.isCloned():
                 # self.select(p)
@@ -888,7 +891,10 @@ class LeoQtTree(leoFrame.LeoTree):
         if not p.isExpanded():
             p.expand()
         ### self.select(p)
+            # Required, to change nodes properly!
         self.full_redraw(p)
+            # Now ensures that p is selected.
+
         ###
             # self.select(p) # Calls before/afterSelectHint.
             # ### self.full_redraw()
