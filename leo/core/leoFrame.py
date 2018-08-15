@@ -92,9 +92,9 @@ class TreeAPI(object):
 
     def initAfterLoad(self): pass
 
-    def afterSelectHint(self, p, old_p): pass
+    def afterSelectHint(self, p): pass
 
-    def beforeSelectHint(self, p, old_p): pass
+    def beforeSelectHint(self, p): pass
 
     def onHeadChanged(self, p, undoType='Typing', s=None, e=None): pass
     # Hints for optimization. The proper default is c.redraw()
@@ -1267,10 +1267,10 @@ class LeoTree(object):
     def initAfterLoad(self):
         '''Do late initialization. Called in g.openWithFileName after a successful load.'''
 
-    def afterSelectHint(self, p, old_p):
+    def afterSelectHint(self, p):
         '''Called at end of tree.select.'''
 
-    def beforeSelectHint(self, p, old_p):
+    def beforeSelectHint(self, p):
         '''Called at start of tree.select.'''
     # Hints for optimization. The proper default is c.redraw()
 

@@ -625,7 +625,7 @@ class LeoQtTree(leoFrame.LeoTree):
                 self.updateVisibleIcons(p)
         finally:
             self.busy = False
-    #@+node:ekr.20110605121601.17884: *4* qtree.redraw_after_select
+    #@+node:ekr.20110605121601.17884: *4* qtree.redraw_after_select (no longer used)
     # Important: this can not replace before/afterSelectHint.
 
     def redraw_after_select(self, p=None):
@@ -878,7 +878,7 @@ class LeoQtTree(leoFrame.LeoTree):
         '''Handle and tree-expansion event.'''
         if self.busy: # Required
             return
-        c = self.c
+        ### c = self.c
         p = self.item2position(item)
         if not p:
             self.error('no p')
@@ -887,14 +887,15 @@ class LeoQtTree(leoFrame.LeoTree):
         # Only methods that actually generate events should set lockouts.
         if not p.isExpanded():
             p.expand()
-        self.select(p)
+        ### self.select(p)
+        self.full_redraw(p)
         ###
             # self.select(p) # Calls before/afterSelectHint.
             # ### self.full_redraw()
                 # # Important: setting scroll=False here has no effect
                 # # when a keystroke causes the expansion, but is a
                 # # *big* improvement when clicking the outline.
-        c.outerUpdate()
+        ### c.outerUpdate()
     #@+node:ekr.20110605121601.17899: *4* qtree.onTreeSelect
     def onTreeSelect(self):
         '''Select the proper position when a tree node is selected.'''

@@ -2747,17 +2747,21 @@ class Commands(object):
             return self.frame.tree.redraw_after_head_changed()
         else:
             c.requestLaterRedraw = True
-    #@+node:ekr.20090110073010.4: *6* c.redraw_after_select
+    #@+node:ekr.20090110073010.4: *6* c.redraw_after_select (disabled)
     def redraw_after_select(self, p):
         '''Redraw the screen after node p has been selected.'''
-        c = self
-        if c.enableRedrawFlag:
-            flag = c.expandAllAncestors(p)
-            if flag:
-                c.frame.tree.redraw_after_select(p)
-                    # This almost never happens!
-        else:
-            c.requestLaterRedraw = True
+        return ###
+        ### No done in c.selectPosition.
+            # c = self
+            # c.expandAllAncestors(p)
+        ###
+            # if c.enableRedrawFlag:
+                # flag = c.expandAllAncestors(p)
+                # if flag:
+                    # c.frame.tree.redraw_after_select(p)
+                        # # This almost never happens!
+            # else:
+                # c.requestLaterRedraw = True
     #@+node:ekr.20170908081918.1: *6* c.redraw_later
     def redraw_later(self):
         '''
@@ -3352,6 +3356,10 @@ class Commands(object):
         c.setCurrentPosition(p)
             # Do *not* test whether the position exists!
             # We may be in the midst of an undo.
+        c.expandAllAncestors(p)
+            ###
+                # Experimental.
+                # If it works, we can eliminate all calls to redraw_after_select.
 
     # Compatibility, but confusing.
     selectVnode = selectPosition
