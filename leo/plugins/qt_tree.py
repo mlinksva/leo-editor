@@ -291,12 +291,13 @@ class LeoQtTree(leoFrame.LeoTree):
             p = c.currentPosition()
         elif c.hoistStack and p.h.startswith('@chapter') and p.hasChildren():
             # Make sure the current position is visible.
-            # Part of fix of bug 875323: Hoist an @chapter node leaves a non-visible node selected.
+            # Part of fix of bug 875323:
+            # Hoist an @chapter node leaves a non-visible node selected.
             p = p.firstChild()
             c.frame.tree.select(p)
             c.setCurrentPosition(p)
         else:
-            c.frame.tree.select(p) ### Make *sure* we switch nodes properly.
+            c.frame.tree.select(p)
             c.setCurrentPosition(p)
         assert not self.busy, g.callers()
         self.redrawCount += 1
@@ -497,7 +498,7 @@ class LeoQtTree(leoFrame.LeoTree):
     #@+node:ekr.20110605121601.17876: *5* qtree.drawTopTree
     def drawTopTree(self, p):
         '''Draw the tree rooted at p.'''
-        trace = 'drawing' in g.app.debug and not g.unitTesting
+        trace = True ###'drawing' in g.app.debug and not g.unitTesting
         if trace:
             t1 = time.clock()
         c = self.c
@@ -520,7 +521,7 @@ class LeoQtTree(leoFrame.LeoTree):
                 p.moveToNext()
         if trace:
             t2 = time.clock()
-            g.trace('%5.2f sec.' % (t2-t1))
+            g.trace('%5.2f sec.' % (t2-t1), g.callers(5))
     #@+node:ekr.20110605121601.17877: *5* qtree.drawTree
     def drawTree(self, p, parent_item=None):
         if g.app.gui.isNullGui:
@@ -841,9 +842,9 @@ class LeoQtTree(leoFrame.LeoTree):
         # Do **not** set lockouts here.
         # Only methods that actually generate events should set lockouts.
         p.contract()
-        self.full_redraw(p)
+        ### self.full_redraw(p)
             # Now ensures the node is selected properly.
-        ### self.select(p)
+        self.select(p)
         ###
             # if p.isCloned():
                 # self.select(p)
@@ -890,9 +891,9 @@ class LeoQtTree(leoFrame.LeoTree):
         # Only methods that actually generate events should set lockouts.
         if not p.isExpanded():
             p.expand()
-        ### self.select(p)
+        self.select(p)
             # Required, to change nodes properly!
-        self.full_redraw(p)
+        ### self.full_redraw(p)
             # Now ensures that p is selected.
 
         ###
