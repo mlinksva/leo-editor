@@ -1474,16 +1474,18 @@ class LeoTree(object):
         '''
         if g.app.killed or self.tree_select_lockout: # Essential.
             return None
+        c = self.c
+        ### old_p = c.p
         try:
-            c = self.c; old_p = c.p
-            ### val = 'break'
             self.tree_select_lockout = True
-            c.frame.tree.beforeSelectHint(p, old_p)
+            self.prev_v = c.p.v
+                ### c.frame.tree.beforeSelectHint(p, old_p)
             self.selectHelper(p)
         finally:
             self.tree_select_lockout = False
-            c.frame.tree.afterSelectHint(p, old_p)
-        ### return val # Don't put a return in a finally clause.
+            ### c.frame.tree.afterSelectHint(p, old_p)
+        c.outerUpdate() # Bring the tree up to date.
+        self.setItemForCurrentPosition()
     #@+node:ekr.20070423101911: *4* selectHelper (LeoTree) & helpers
     def selectHelper(self, p):
         '''
@@ -2004,8 +2006,9 @@ class NullTree(LeoTree):
 
     def redraw_after_select(self, p=None): self.redraw()
 
-    def scrollTo(self, p):
-        pass
+    def scrollTo(self, p): pass
+        
+    def setItemForCurrentPosition(self): pass
     #@+node:ekr.20070228160345: *3* NullTree.setHeadline
     def setHeadline(self, p, s):
         '''Set the actual text of the headline widget.

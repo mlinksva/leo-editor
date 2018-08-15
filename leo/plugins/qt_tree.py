@@ -625,7 +625,7 @@ class LeoQtTree(leoFrame.LeoTree):
                 self.updateVisibleIcons(p)
         finally:
             self.busy = False
-    #@+node:ekr.20110605121601.17884: *4* qtree.redraw_after_select
+    #@+node:ekr.20110605121601.17884: *4* qtree.redraw_after_select (DISABLED)
     # Important: this can not replace before/afterSelectHint.
 
     def redraw_after_select(self, p=None):
@@ -633,6 +633,7 @@ class LeoQtTree(leoFrame.LeoTree):
         if self.busy:
             g.trace('busy', g.callers())
             return
+        g.trace('===== (qtree) REDRAW', p and p.h)
         self.full_redraw(p)
         # c.redraw_after_select calls tree.select indirectly.
         # Do not call it again here.
@@ -839,12 +840,14 @@ class LeoQtTree(leoFrame.LeoTree):
         # Do **not** set lockouts here.
         # Only methods that actually generate events should set lockouts.
         p.contract()
-        if p.isCloned():
-            self.select(p) # Calls before/afterSelectHint.
-            # 2010/02/04: Keep the expansion bits of all tree nodes in sync.
-            self.full_redraw()
-        else:
-            self.select(p) # Calls before/afterSelectHint.
+        self.select(p)
+        ###
+            # if p.isCloned():
+                # self.select(p)
+                # # Keep the expansion bits of all tree nodes in sync.
+                # ### self.full_redraw()
+            # else:
+                # self.select(p) # Calls before/afterSelectHint.
         c.outerUpdate()
     #@+node:ekr.20110605121601.17897: *4* qtree.onItemDoubleClicked
     def onItemDoubleClicked(self, item, col):
@@ -884,13 +887,13 @@ class LeoQtTree(leoFrame.LeoTree):
         # Only methods that actually generate events should set lockouts.
         if not p.isExpanded():
             p.expand()
-            self.select(p) # Calls before/afterSelectHint.
-            self.full_redraw()
-                # Important: setting scroll=False here has no effect
-                # when a keystroke causes the expansion, but is a
-                # *big* improvement when clicking the outline.
-        else:
-            self.select(p)
+        self.select(p)
+        ###
+            # self.select(p) # Calls before/afterSelectHint.
+            # ### self.full_redraw()
+                # # Important: setting scroll=False here has no effect
+                # # when a keystroke causes the expansion, but is a
+                # # *big* improvement when clicking the outline.
         c.outerUpdate()
     #@+node:ekr.20110605121601.17899: *4* qtree.onTreeSelect
     def onTreeSelect(self):
@@ -1377,7 +1380,8 @@ class LeoQtTree(leoFrame.LeoTree):
             if p != c.p:
                 p = c.p
             # We don't redraw during unit testing: an important speedup.
-            if c.expandAllAncestors(p) and not g.unitTesting:
+            if False: ### c.expandAllAncestors(p) and not g.unitTesting:
+                g.trace('FULL REDRAW')
                 self.full_redraw(p)
             else:
                 c.outerUpdate() # Bring the tree up to date.
