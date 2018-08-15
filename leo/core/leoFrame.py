@@ -1478,14 +1478,16 @@ class LeoTree(object):
         ### old_p = c.p
         try:
             self.tree_select_lockout = True
-            self.prev_v = c.p.v
+            self.prev_v = c.p.v # For qtree.onItemClicked.
                 ### c.frame.tree.beforeSelectHint(p, old_p)
             self.selectHelper(p)
         finally:
             self.tree_select_lockout = False
-            ### c.frame.tree.afterSelectHint(p, old_p)
-        c.outerUpdate() # Bring the tree up to date.
-        self.setItemForCurrentPosition()
+            ### c.frame.tree.afterSelectHint(p)
+            ### if p != c.p:
+            ###    p = c.p
+            c.outerUpdate() # Bring the tree up to date.
+            self.setItemForCurrentPosition()
     #@+node:ekr.20070423101911: *4* selectHelper (LeoTree) & helpers
     def selectHelper(self, p):
         '''

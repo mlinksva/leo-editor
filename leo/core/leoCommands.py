@@ -2747,11 +2747,9 @@ class Commands(object):
             return self.frame.tree.redraw_after_head_changed()
         else:
             c.requestLaterRedraw = True
-    #@+node:ekr.20090110073010.4: *6* c.redraw_after_select (DISABLED)
+    #@+node:ekr.20090110073010.4: *6* c.redraw_after_select
     def redraw_after_select(self, p):
         '''Redraw the screen after node p has been selected.'''
-        return ###
-
         c = self
         if c.enableRedrawFlag:
             flag = c.expandAllAncestors(p)

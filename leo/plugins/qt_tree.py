@@ -625,7 +625,7 @@ class LeoQtTree(leoFrame.LeoTree):
                 self.updateVisibleIcons(p)
         finally:
             self.busy = False
-    #@+node:ekr.20110605121601.17884: *4* qtree.redraw_after_select (DISABLED)
+    #@+node:ekr.20110605121601.17884: *4* qtree.redraw_after_select
     # Important: this can not replace before/afterSelectHint.
 
     def redraw_after_select(self, p=None):
@@ -1368,8 +1368,8 @@ class LeoQtTree(leoFrame.LeoTree):
         vScroll = w.verticalScrollBar()
         vScroll.setValue(vPos)
     #@+node:ekr.20110605121601.17905: *3* qtree.Selecting & editing
-    #@+node:ekr.20110605121601.17906: *4* qtree.afterSelectHint
-    def afterSelectHint(self, p, old_p):
+    #@+node:ekr.20110605121601.17906: *4* qtree.afterSelectHint (not used)
+    def afterSelectHint(self, p): ### , old_p): #old_p not used.
 
         if self.busy:
             return self.error('busy!: %s')
@@ -1388,7 +1388,7 @@ class LeoQtTree(leoFrame.LeoTree):
                 self.setItemForCurrentPosition()
         else:
             c.requestLaterRedraw = True
-    #@+node:ekr.20110605121601.17907: *4* qtree.beforeSelectHint
+    #@+node:ekr.20110605121601.17907: *4* qtree.beforeSelectHint (not used)
     def beforeSelectHint(self, p, old_p):
 
         if self.busy:
